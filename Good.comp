@@ -1,0 +1,36 @@
+#version 450
+
+layout(std140, binding = 4) restrict writeonly buffer Output { mat3x4 outBoneMatrix[]; };
+
+void translate(inout mat4 m, in vec3 v)
+{
+	m[3].xyz += v;
+}
+
+mat4 run()
+{
+	vec3 d = vec3(1,2,3);
+	mat4 result = mat4(1.0);
+
+	result[3].xyz += d;
+//	translate(result, d);
+
+	while (true) {
+		// Update indices
+
+		if (true) {
+			result[3].xyz += d;
+//			translate(result, d);
+			break;
+		}
+	}
+
+	return result;
+}
+
+layout(local_size_x = 1) in;
+
+void main() {
+	mat4 outMat = transpose(run());
+	outBoneMatrix[gl_LocalInvocationID.x] = mat3x4(outMat[0], outMat[1], outMat[2]);
+}
