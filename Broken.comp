@@ -1,6 +1,6 @@
 #version 450
 
-layout(std140, binding = 4) restrict writeonly buffer Output { mat3x4 outBoneMatrix[]; };
+layout(std140, binding = 4) restrict writeonly buffer Output { mat3x4 outMatrix[]; };
 
 void translate(inout mat4 m, in vec3 v)
 {
@@ -16,8 +16,6 @@ mat4 run()
 	translate(result, d);
 
 	while (true) {
-		// Update indices
-
 		if (true) {
 //			result[3].xyz += d;
 			translate(result, d);
@@ -32,5 +30,5 @@ layout(local_size_x = 1) in;
 
 void main() {
 	mat4 outMat = transpose(run());
-	outBoneMatrix[gl_LocalInvocationID.x] = mat3x4(outMat[0], outMat[1], outMat[2]);
+	outMatrix[gl_LocalInvocationID.x] = mat3x4(outMat[0], outMat[1], outMat[2]);
 }
